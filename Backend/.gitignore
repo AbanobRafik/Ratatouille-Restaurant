@@ -1,0 +1,32 @@
+# dependencies
+node_modules/
+
+# env files
+.env
+.env.*
+!.env.example
+
+# logs
+logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# build / dist
+dist/
+build/
+
+# uploads (لو عندك صور)
+uploads/
+
+# coverage (testing)
+coverage/
+
+# vscode
+.vscode/
+
+# nodemon temp
+nodemon.json
