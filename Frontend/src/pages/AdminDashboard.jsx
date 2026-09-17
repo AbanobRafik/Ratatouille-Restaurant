@@ -5,15 +5,34 @@ import { useLogout } from "../hooks/useLogout";
 
 import AdminHeader from "../components/admin/AdminHeader";
 import AdminOrderList from "../components/admin/AdminOrderList";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { getAllOrders } from "../redux/order/orderSlice";
+import socket from "../socket/socket";
 
 export default function AdminDashboard() {
   const { orders, status, error } = useGetAllOrders();
+  const dispatch = useDispatch();
 
   const { handleUpdateOrderStatus, status: updateStatus } =
     useUpdateOrderStatus();
 
   const { handleDeleteOrder, status: deleteStatus } = useDeleteOrder();
   const { handleLogout } = useLogout();
+
+  useEffect(() => {
+    const handleNewOrder = (data) => {
+      console.log("🔥 NEW ORDER RECEIVED:", data);
+
+      dispatch(getAllOrders());
+    };
+
+    socket.on("newOrder", handleNewOrder);
+
+    return () => {
+      socket.off("newOrder", handleNewOrder);
+    };
+  }, [dispatch]);
 
   return (
     <main className="min-h-screen bg-[#fffaf4] px-5 pb-20 pt-28 text-[#252525] sm:px-8">

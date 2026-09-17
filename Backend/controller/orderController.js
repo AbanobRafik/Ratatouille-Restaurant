@@ -32,6 +32,12 @@ export const createOrder = async (req, res) => {
     cart.items = [];
     await cart.save();
 
+    const io = req.app.get("io")
+
+    io.to("admins").emit("newOrder", {
+      order : newOrder
+    })
+
     res.status(201).json({
       message: "Order created succefully",
       order: newOrder,

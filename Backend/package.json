@@ -23,6 +23,8 @@
     "nodemon": "^3.1.14"
   },
   "dependencies": {
-    "bcrypt": "^6.0.0"
+    "bcrypt": "^6.0.0",
+    "cookie": "^2.0.1",
+    "socket.io": "^4.8.3"
   }
 }

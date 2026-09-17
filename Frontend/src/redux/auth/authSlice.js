@@ -69,7 +69,7 @@ const authSlice = createSlice({
     });
     builder.addCase(registerUser.rejected, (state, { payload }) => {
       state.status = "error";
-      state.error = payload;
+      state.error = payload.message || "Registration failed";
     });
     // Login
     builder.addCase(loginUser.pending, (state) => {

@@ -29,8 +29,8 @@ router.post("/add", authMiddleware, adminMiddleware, addNewDish);
 router.delete("/delete/:id", authMiddleware, adminMiddleware, deleteDish);
 router.put("/update/:id", authMiddleware, adminMiddleware, updateDish);
 
-// * for all users to view dishes
-router.get("/getAll", authMiddleware, getAllDishes);
+// * public read access; ordering and cart actions remain protected below
+router.get("/getAll", getAllDishes);
 router.get("/dish/:id", authMiddleware, getDishByCode);
 
 // * cart routes

@@ -2,18 +2,22 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import { createServer } from "http";
+
 import connectDb from "./DataBase/Database.js";
 import router from "./routes/router.js";
 import authRouter from "./routes/authRoutes.js";
-
-const app = express();
+import { initializeSocket } from "./socket/socket.js";
 
 dotenv.config();
 
-/**
- * * Enable CORS so that frontend (React) on a different origin can make requests
- * * and allow sending cookies for authentication (JWT in httpOnly cookie)
- */
+const app = express();
+const server = createServer(app);
+
+const io = initializeSocket(server);
+
+app.set("io", io);
+
 app.use(
   cors({
     origin: "http://localhost:5173",
@@ -23,10 +27,12 @@ app.use(
 
 app.use(express.json());
 app.use(cookieParser());
+
 app.use("/api", router);
 app.use("/auth", authRouter);
+
 connectDb();
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server running on port http://localhost:${process.env.PORT}`);
+server.listen(process.env.PORT, () => {
+  console.log(`Server running on http://localhost:${process.env.PORT}`);
 });

@@ -8,6 +8,7 @@ import CartPage from "../pages/CartPage";
 import OrdersPage from "../pages/OrdersPage";
 import AdminDashboard from "../pages/AdminDashboard";
 import ProtectedRouter from "../components/ProtectedRouter";
+import AuthenticatedRouter from "../components/AuthenticatedRouter";
 
 export const router = createBrowserRouter([
   {
@@ -18,8 +19,13 @@ export const router = createBrowserRouter([
       { path: "menu", element: <MenuPage /> },
       { path: "login", element: <Login /> },
       { path: "register", element: <Register /> },
-      { path: "cart", element: <CartPage /> },
-      { path: "orders", element: <OrdersPage /> },
+      {
+        element: <AuthenticatedRouter />,
+        children: [
+          { path: "cart", element: <CartPage /> },
+          { path: "orders", element: <OrdersPage /> },
+        ],
+      },
       {
         element: <ProtectedRouter />,
         children: [
